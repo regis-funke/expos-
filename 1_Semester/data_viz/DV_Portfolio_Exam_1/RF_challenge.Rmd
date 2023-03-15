@@ -1,0 +1,382 @@
+---
+title: "Visualization Challenge"
+author: "Regis Funke"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    toc: yes
+    toc_float: yes
+    df_print: paged
+    code_folding: show
+    highlight: tango
+    number_sections: no
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE,warning = FALSE)
+```
+
+# Guidelines
+
+-   Plots are supposed to be 
+    1. interesting
+    2. effective (we humans can grasp the message)
+    3. scientifically appropriate (don't mislead)
+    4. aesthetically pleasing.
+-   Explanations are supposed to be in full sentences (not only bullet points)
+
+# The data
+
+This challenge uses data from <https://happyplanetindex.org>. On that website a community of international organisations and indidviduals publish an index - the Happy Planet Index - which is meant as an alternative to mainstream indicators of ecological growth.
+
+As stated on the website: *"Our current ecological system is driven by a 'growth at all costs' mentality, as measured by Gross Domestic Product (GDP). There is an entrenched belief that GDP growth is synonymous with increasing wellbeing and prosperity and is universally beneficial. In reality, GDP growth on its own does not mean a better life for everyone, particularly in countries that are already wealthy. It doesn't take into account inequality, the things that really matter to people like social relations, health, or how they spend their free time, and crucially, the planetary limits we are up against."*
+
+The Happy Planet Index (HPI) is computet from three variables: (1) life expectancy, (2) experienced wellbeing, (3) ecological footprint. The first two contribute positively to the index, the third one contributes negatively to the index. You can find the details [here](https://happyplanetindex.org/wp-content/themes/hpi/public/downloads/happy-planet-index-methodology-paper.pdf), in particular a precise definition of the variables (page 3 and 4). The data set also contains the variable GDP per capita, although it is not used for the computation of the Happy Planet Index.
+
+```{r}
+# Load your packages here
+library(tidyverse)
+library(sf)        
+library(rnaturalearth)
+library(GGally)
+library(plotly)
+library(viridis)
+```
+
+```{r}
+# Read in the data set here
+hpi <- read.csv(file = 'happy-planet-index.csv')
+
+```
+
+# Task 1 (30 points)
+
+-   Focus only on the year 2019. 
+-   The task is to visually reveal relationships between multiple variables: How are `gdp_capita`, `experienced_wellbeing`, `footprint` and `life_expectancy` related to the Happy Planet Index `hpi`? And how are these variables interrelated?
+-   Create a maximum of 2 plots to expose the most interesting types of relationships. The plot should also contain (a selection of) country names.
+-   Provide a brief textual explanation of your main insights.
+
+```{r}
+# instantiating and storing data of the year 2019 in hpi_2019
+hpi_2019 <- hpi %>%
+  filter(year == 2019)
+```
+
+```{r}
+# correlation matrix configuration
+ggcorr(hpi_2019[, 5:9], color = "grey35", size = 4, hjust = 0.8, label = TRUE) + 
+  ggplot2::labs(title = "Correlation Coefficient of the Variables", caption = 'https://happyplanetindex.org') +
+  ggplot2::theme(legend.position = "right") + scale_fill_viridis() 
+```
+
+Analysing the correlation matrix we can make some observations:
+
+-   the happy planet index (hpi) and the ecological footprint (footprint) have a slight negative correlation
+-   the happy planet index (hpi) and the gross domestic product (gdp_capita) have no correlation
+-   the life expectancy (lifeexp) and the experienced wellbeing (experienced_wellbeing) as well as the ecological footprint (footprint) and the gross domestic product (gdp_capita) have the highest correlations
+
+
+```{r}
+# selecting subset of country names to display in plot
+names <- hpi_2019 %>% filter(
+  country == 'Qatar' | 
+  country == 'Denmark' |
+  country == 'India' |
+  country == 'Afghanistan' |
+  country == 'Costa Rica') 
+
+# building individual plots
+fig1 <- plot_ly(data = hpi_2019, x = ~experienced_wellbeing, y = ~hpi, type = 'scatter')
+
+fig1 <- plot_ly(data = hpi_2019, x = ~experienced_wellbeing, y = ~hpi) %>% 
+  add_annotations(x = names$experienced_wellbeing,
+                  y = names$hpi,
+                  text = names$country,
+                  xref = "x",
+                  yref = "y",
+                  showarrow = TRUE,
+                  arrowhead = 4,
+                  arrowsize = .5,
+                  ax = 20,
+                  ay = -40)
+
+fig2 <- plot_ly(data = hpi_2019, x = ~footprint, y = ~hpi, type = 'scatter')
+
+fig2 <- plot_ly(data = hpi_2019, x = ~footprint, y = ~hpi) %>% 
+  add_annotations(x = names$footprint,
+                  y = names$hpi,
+                  text = names$country,
+                  xref = "x",
+                  yref = "y",
+                  showarrow = TRUE,
+                  arrowhead = 4,
+                  arrowsize = .5,
+                  ax = 20,
+                  ay = -40)
+
+fig3 <- plot_ly(data = hpi_2019, x = ~lifeexp, y = ~hpi, type = 'scatter')
+
+fig3 <- plot_ly(data = hpi_2019, x = ~lifeexp, y = ~hpi) %>% 
+  add_annotations(x = names$lifeexp,
+                  y = names$hpi,
+                  text = names$country,
+                  xref = "x",
+                  yref = "y",
+                  showarrow = TRUE,
+                  arrowhead = 4,
+                  arrowsize = .5,
+                  ax = 20,
+                  ay = -40)
+
+fig4 <- plot_ly(data = hpi_2019, x = ~gdp_capita, y = ~hpi, type = 'scatter')
+
+fig4 <- plot_ly(data = hpi_2019, x = ~gdp_capita, y = ~hpi) %>% 
+  add_annotations(x = names$gdp_capita,
+                  y = names$hpi,
+                  text = names$country,
+                  xref = "x",
+                  yref = "y",
+                  showarrow = TRUE,
+                  arrowhead = 4,
+                  arrowsize = .5,
+                  ax = 20,
+                  ay = -40)
+
+# combining individual plots to subplot
+fig <- subplot(fig1, fig2, fig3, fig4, nrows = 2, margin = 0.05) %>%
+  layout(title = 'Happy Planet Index vs. Variables',
+         plot_bgcolor='#e5ecf6',
+         margin = 0.05)
+
+# configuring annotations
+annotations = list( 
+  list( 
+    x = 0.2,  
+    y = 1.05,  
+    text = "Experienced Wellbeing",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ),  
+  list( 
+    x = 0.8,  
+    y = 1.05,  
+    text = "Ecological Footprint",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ),  
+  list( 
+    x = 0.2,  
+    y = -0.15,  
+    text = "Life Expectancy",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ),
+  list( 
+    x = 0.8,  
+    y = -0.15,  
+    text = "GDP per Capita",  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ),
+  list(
+    x = 1.1, y = -0.25, text = "https://happyplanetindex.org", 
+    showarrow = F, xref='paper', yref='paper', 
+    xanchor='right', yanchor='auto', xshift=0, yshift=0,
+    font=list(size=8, color="black"))
+  )
+
+# adding annotations
+fig <- fig %>%layout(annotations = annotations, showlegend = FALSE)
+
+# printing plot
+fig
+```
+
+
+From the observations we might deduce that the wealth of country doesn't have an influence on the happiness of it's citizens. Furthermore the it shows that countries with larger gross domestic product will have a higher ecological footprint.
+
+Life expectancy imposes a linear upper bound on the Happy Planet Index: For a given life expectancy, there is a maximum value above which the Happy Planet Index can not rise. The same is true for experienced wellbeing and ecological footprint. Though the slope of the boundary of is positive for Experienced Wellbeing and Life Expectancy but negative for Ecological Footprint. 
+
+Countries with a high ecological footprint also appear to have an upper bound on the Happy Planet Index: most notably in that case is Qatar
+
+This is similar but not as pronounced between the Happy Planet Index of a country and it's GDP per Capita. 
+
+In conclusion we find:
+
+-   a low life expectancy and a high Happy Planet Index are mutually exclusive
+-   a low experienced wellbeing and a high Happy Planet Index are mutually exclusive
+-   a high ecological footprint and a high Happy Planet Index are mutually exclusive
+ 
+
+
+
+# Task 2 (30 points)
+
+-   Focus only on the country Zimbabwe.
+-   The task is (1) to to show how Zimbabwe's Happy Planet Index has evolved in the course of time, and (2) to expose the reasons for this change.
+-   Create a single plot that contains the time series of `lifeexp`, `experienced_wellbeing`, `footprint`, and `hpi` between 2006 and 2020.
+-   Provide a brief textual explanation of your main insights.
+
+```{r}
+# focus only on the country Zimbabwe between 2006 and 2020.
+hpi_zwe <- hpi %>% arrange(year) %>% filter(country =="Zimbabwe" & year >= 2006 & year <= 2020)
+
+hpi_zwe_chng <- hpi_zwe %>%
+  mutate(hpi_perc = ((hpi - hpi[1L]) / hpi[1L])*100) %>%
+  mutate(lifeexp_perc = ((lifeexp - lifeexp[1L]) / lifeexp[1L])*100) %>%
+  mutate(experienced_wellbeing_perc = ((experienced_wellbeing-experienced_wellbeing[1L]) / experienced_wellbeing[1L])*100) %>%
+  mutate(footprint_perc = ((footprint-footprint[1L]) / footprint[1L])*100) 
+
+fig <- plot_ly(hpi_zwe_chng, x = ~year, y = ~hpi_perc, name = 'Happy Planet Index', type = 'scatter', mode = 'lines', line = list(width = 3)) 
+
+fig <- fig %>% add_trace(y = ~lifeexp_perc, name = 'Life Expectancy', line = list(width = 1))
+
+fig <- fig %>% add_trace(y = ~experienced_wellbeing_perc, name = 'Experienced Wellbeing', line = list(width = 1)) 
+
+fig <- fig %>% add_trace(y = ~footprint_perc, name = 'Footprint', line = list(width = 1)) 
+
+fig <- fig %>% layout(title = "Development of Zimbabwe",
+                      plot_bgcolor='#e5ecf6',
+                      margin = 0.05,
+                      xaxis = list(title = "Year"),
+                      yaxis = list(title = "Change in % since 2006"),
+                      annotations = list(
+                        x = 1.3, y = -0.2, text = "https://happyplanetindex.org", 
+                        showarrow = F, xref='paper', yref='paper', 
+                        xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                        font=list(size=8, color="black"))
+                        )
+
+fig
+```
+The chart shows two distinct periods, from 2006 to 2012 and from 2012 to 2020.
+
+During 2006 to 2012:
+
+-   Life Expectancy increased rapidly in this period
+-   HPI and Experienced Wellbeing dropped until 2008 and then started increasing
+-   the Ecological Footprint is decreasing
+
+
+During 2012 to 2020:
+
+-   Life Expectancy growth starting to flatten
+-   HPI and Experienced Wellbeing starting to decline
+-   the Ecological Footprint is decreasing more than before
+
+
+Final observations:
+
+-   Life expectancy is dominating the HPI
+-   It also appears that a declining Ecological Footprint doesn't lead to higher HPI 
+
+
+
+
+# Task 3 (25 points)
+
+-   Visualize the Happy Planet Index of the year 2019 on a map of the world
+-   Choose a [LAEA](https://en.wikipedia.org/wiki/Lambert_azimuthal_equal-area_projection) projection of the world (i.e. the world gets represented as a globe), and put the country with the highest Happy Planet Index in the center of the world.
+```{r}
+# finding happiest country
+arrange(hpi_2019, desc(hpi))[1, 2]
+```
+
+
+```{r}
+geo <- rnaturalearth::ne_countries(returnclass = "sf") %>%
+  select(iso_a3, geometry)
+
+sf <- hpi_2019 %>% 
+  right_join(geo, by = c("iso"="iso_a3")) %>%
+  st_as_sf()
+
+# finding coordinates online:
+# Latitude: 9.6301892  Longitude: -84.2541844
+
+map <- ggplot(data = sf, mapping = aes(fill = hpi)) + 
+  geom_sf() +
+  coord_sf(crs = "+proj=laea +lat_0=9 +lon_0=-84 +ellps=GRS80 +units=m +no_defs ", expand = FALSE) +
+  scale_fill_viridis_c(begin = 0.1)
+
+map + 
+  labs(
+    title = "Lambert azimuthal equal-area projection", 
+    fill = "Happy Planet Index", 
+    caption = 'https://happyplanetindex.org')
+```
+
+
+
+
+
+# Task 4 (15 points)
+
+- Create a plot that shows the distribution of the Happy Planet Index per continent. While there are many possible ways to represent distributions, choose one that makes it easy to compare the different continents with each other.
+```{r}
+hpi_per_continent <- hpi %>% 
+  group_by(continent)
+
+fig <- hpi_per_continent %>%
+  plot_ly(
+    x = ~continent,
+    y = ~hpi,
+    split = ~continent,
+    type = 'violin',
+    points = FALSE,
+    box = list(visible = T),
+    meanline = list(visible = T)) 
+
+fig <- fig %>%
+  layout(
+    title = "HPI Distribution per Continent",
+    margin = 0.05,
+    plot_bgcolor='#e5ecf6',
+    xaxis = list(
+      title = "Continents"),
+    yaxis = list(
+      title = "Happy Planet Index",
+      zeroline = F),
+    annotations = list(
+      x = 1.5, y = -0.45, text = "https://happyplanetindex.org", 
+      showarrow = F, xref='paper', yref='paper', 
+      xanchor='right', yanchor='auto', xshift=0, yshift=0,
+      font=list(size=8, color="black"))) 
+
+fig 
+```
+When comparing the mean of the continents, we find: 
+
+-   Latin America has highest mean of 51
+-   Africa has the lowest mean of 35
+-   North America and Oceania has a mean of 43
+-   Western Europe has a mean of 47
+-   Surprisingly, Latin America has a higher mean than North America and Western Europe
+
+When comparing the distributions of the continents, we find:
+
+-   Latin America has the largest range, where the lower end is close to Africa yet the higher values are the highest in the world
+-   Eastern Europe and Central Asia has the least spread of all continent
+-   N. America and Oceania has the most values around the lower bound but some high values that compare to East Asia and Wester Europe
+-   Western Europe has some outliers in the lower ranges with the majority of values around the mean
+
+When comparing continents directly, there are also some curiosities:
+
+-   the mean HPI of N. America & Oceania is very close to those of the Middle East & N. Africa as well as Eastern Europe & Central Asia
+-   the mean HPI of Europe is comparable to South Asia
+-   Latin America has the highest mean and the highest max value while also having the largest spread

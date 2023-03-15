@@ -1,0 +1,372 @@
+---
+title: 'RF DV Portfolio Exam 2'
+date: 'Summer Semester 2022'  
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+    code_folding: hide  
+    highlight: tango
+    number_sections: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Preface
+
+The data used for this exercise is sourced from DESTATIS (https://www-genesis.destatis.de/genesis/online).
+
+Same of the data was downloaded using the open API, though due to a lack of reliability, the user interface on the website was also used. Through these means we obtained the files:
+
+* 61111-0004.xml
+* 61111-0002.xlsx
+
+
+## Technical Setup & Data Ingestion
+
+For easier data handling and the ability to plot we import tidyverse and ploty. 
+```{r, message = FALSE}
+# importing libraries 
+library(tidyverse)
+library(plotly)
+```
+
+
+These files were prepared for this visualization exercise using python (RF_DV_data_prep.ipynb). The python notebook produces six tables as the basis for the following visualizations:
+
+* 61111-0004.csv (original data, where 2015=100 index point) 
+* 61111-0004_pct.csv (percentage change to same month of the previous year)
+* 61111-0004_std.csv (normalized on January 1991 to 100 index points)
+
+* 61111-0002.csv (original data, where 2015=100 index point) 
+* 61111-0002_pct.csv (percentage change to same month of the previous year)
+* 61111-0002_std.csv (normalized on January 1991 to 100 index points)
+```{r, message = FALSE}
+# ingesting data 
+df_1 <- read_csv(file = 'preped_data/61111-0004.csv')
+df_1_std <- read_csv(file = 'preped_data/61111-0004_std.csv')
+df_1_pct <- read_csv(file = 'preped_data/61111-0004_pct.csv')
+
+df_2 <- read_csv(file = 'preped_data/61111-0002.csv')
+df_2_std <- read_csv(file = 'preped_data/61111-0002_std.csv')
+df_2_pct <- read_csv(file = 'preped_data/61111-0002_pct.csv')
+```
+
+
+
+# Introduction
+
+With the recent uptick of news regarding inflation, we want to explore what effects this might have on regular people.
+
+To do this we look at economic data starting in 1991 to today, this data is provided to the public by the DESTATIS (German Federal Office of Statistics).
+
+This data provides monthly values of the consumer price Index as a whole ('61111-0004.csv'), as well as the consumer price indices for specific categories of different types of consumer spending ('61111-0002.csv').
+
+A rise of inflation means an increase in prices. For example, anyone using a car to commute to work felt the recent sharp increase in fuel prices.
+
+We are going to analyse the historical development in different categories of consumer spending to hopefully clarify the history and find out what exactly is going on with inflation right now.
+
+
+# Historical Development of Inflation
+
+The plot below shows the historical development of the consumer price index (inflation) since 1992, while highlighting historic milestones. As we can see, the index increased from 67 to 117 in the past 30 years. This corresponds to an 80% inflation in prices. The chart shows the recent increase after there was a plateau with some volatility around the 2020.
+
+
+```{r, warning = FALSE}
+vline <- function(x = 0, color = 'green') {
+  list(
+    type = 'line',
+    y0 = 0,
+    y1 = 1,
+    yref = 'paper',
+    x0 = x,
+    x1 = x,
+    line = list(color = color, dash='dot'))}
+
+plot_ly(
+  data = df_2, x = ~date,
+  y = ~Verbraucherpreisindex,
+  type = 'scatter',
+  mode = 'lines') %>% 
+  layout(autosize = T, width = 840) %>%
+  layout(
+    title = 'Consumer Price Index',
+    margin = 0.05,
+    plot_bgcolor = '#e5ecf6',
+    xaxis = list(title = 'Year'),
+    yaxis = list(title = 'Inflation Index'), 
+    shapes = list(
+      vline('2000-01-15'),                             # vline x-coord
+      vline('2008-09-15'),                             # vline x-coord
+      vline('2020-03-15')                              # vline x-coord
+    )) %>%
+  
+    add_text(showlegend = FALSE,
+             x = c(
+               '1997-09-15',                           # vline text x-coord
+               '2005-10-15',                           # vline text x-coord
+               '2016-04-15'                            # vline text x-coord
+               ), 
+             y = c(
+               120,
+               120,
+               120
+               ),
+          text = c(
+            'Euro Currency',                           # text vline
+            '2008 Fincial Crisis',                     # text vline
+            '1. Lockdown in Germany'                   # text vline
+            )) %>% 
+  
+            add_annotations( 
+                   x = '2022-01-15',                   # date, arrow tipp
+                   y = 117,                            # level, arrow tipp
+                   xref = 'x', yref = 'y',
+                   axref = 'x', ayref = 'y',
+                   text = '',
+                   showarrow = T,
+                   ax = '1992-06-15',                  # date, arrow tail
+                   ay = 73) %>%                        # y-coord, arrow tail
+              
+                # text annotation for arrow
+               add_annotations( 
+                       x = '2013-04-15',               # date, arrow tipp
+                       y = 107,                        # level, arrow tipp
+                       xref = 'x', yref = 'y',
+                       text = '80% increase in 30 years', 
+                       showarrow = F,
+                       textangle = -20)
+
+```     
+
+Even though the European Central Bank (ECB) has mostly managed to keep the inflation rate in its target range of "at or below 2%". The chart below highlights how fast inflation has risen every month. There was a steady increase since June 2021 from 2.3% to 7.9% in May 2022. 
+```{r, warning = FALSE}
+vline <- function(x = 0, color = 'green') {
+  list(
+    type = 'line',
+    y0 = 0,
+    y1 = 1,
+    yref = 'paper',
+    x0 = x,
+    x1 = x,
+    line = list(color = color, dash='dot'))}
+
+hline <- function(y = 0, color = 'black') {
+  list(
+    type = 'line',
+    x0 = 0,
+    x1 = 1,
+    xref = 'paper',
+    y0 = y,
+    y1 = y,
+    line = list(color = color, dash='dot')
+  )
+}
+
+
+plot_ly(
+  data = df_2_pct, x = ~date,
+  y = ~Verbraucherpreisindex,
+  type = 'scatter',
+  mode = 'lines') %>% 
+  layout(autosize = T, width = 840) %>%
+  layout(
+    title = 'Inflation Rate',
+    margin = 0.05,
+    plot_bgcolor = '#e5ecf6',
+    xaxis = list(title = 'Year'),
+    yaxis = list(title = 'Inflation Rate in %'), 
+    shapes = list(
+      hline(2)                              
+    )) %>%                        
+              
+              
+       add_annotations( 
+               x = '2015-11-15',               
+               y = 2.3,                        
+               xref = 'x', yref = 'y',
+               text = 'ECB Target Rate',
+               showarrow = F)
+```     
+
+
+## Continuous Price Development of Categories of Consumer Spending
+
+The origins of this development can be found when looking at specific categories of consumer spending.  
+```{r, warning = FALSE}
+p <- plot_ly(
+  data = df_1_std, x = ~date, y = ~CC13_02_Alkoholische_Getränke_und_Tabakwaren,
+  name = 'Alcohol & Tabaco',
+  type = 'scatter',
+  mode = 'lines')
+
+p <- p %>% add_trace(y = ~CC13_03_Bekleidung_und_Schuhe,
+                     name = 'Clothing & Shoes')
+
+p <- p %>% add_trace(y = ~CC13_07_Verkehr,
+                     name = 'Transportation')
+
+p <- p %>% add_trace(y = ~CC13_08_Post_und_Telekommunikation,
+                     name = 'Mail & Telco')
+
+p <- p %>% add_trace(y = ~CC13_09_Freizeit_Unterhaltung_und_Kultur,
+                     name = 'Leisure, Entertainment and Culture')
+
+p <- p %>% add_trace(y = ~CC13_10_Bildungswesen,
+                     name = 'Education')
+
+p <- p %>% add_trace(y = ~CC13_01_Nahrungsmittel_und_alkoholfreie_Getränke,
+                     name = 'Food & non-alcoholic Drinks')
+
+p %>% layout(
+    title = 'Consumer Price Index per Category', margin = 0.05,
+    plot_bgcolor = '#e5ecf6',
+    xaxis = list(title = 'Year'),
+    yaxis = list(title = 'Inflation Index')) %>% 
+  layout(autosize = T, width = 840) %>%
+  layout(shapes = list(
+    type = 'rect', line = list(
+      color = '#4f5154', dash='dot'),
+      x0 = '2013-01-15', x1 = '2022-04-15', y0 = 175, y1 = 247), plot_bgcolor = '#e5ecf6')
+```
+Analyzing these different categories which make up part of the overall consumer price index we can observe different behaviors: 
+
+* Some categories have a linear trend development over time: 'Alcohol & Tabaco' and 'Transportation'
+* 'Education' saw a massive increase from the end of 2005 to beginning 2006 before moving sideways to converge on the historic trend
+* 'Clothing & Shoes' and 'Leisure, Entertainment and Culture' have developed nearly identical over time
+* 'Mail & Telco' products and services have experienced declining prices since the mid 90ies
+
+A large part of the reason for the most recent development is that transportation costs and food prices have steadily increased over the past 24 months. This is felt most because Transportation costs have comparatively steady between 2013 and 2020.
+
+
+
+```{r, warning = FALSE}
+plot_ly(
+  df_1_std, type = 'scatter', mode = 'lines') %>%
+  add_trace(x = ~date, y = ~CC13_02_Alkoholische_Getränke_und_Tabakwaren,
+            name = 'Tabaco & Alcohol') %>%
+  add_trace(x = ~date, y = ~CC13_07_Verkehr, 
+            name = 'Transport') %>%
+  layout(
+    title = 'Tabaco & Alcohol Compared to Transport',
+    margin = 0.05,
+    plot_bgcolor = '#e5ecf6',
+    xaxis = list(title = 'Year'),
+    yaxis = list(title = 'Inflation Index')) %>% 
+  # adding arrow
+  add_annotations( 
+     x = '2022-01-15',                   # date, arrow tipp
+     y = 240,                            # level, arrow tipp
+     xref = 'x', yref = 'y',
+     axref = 'x', ayref = 'y',
+     text = '',
+     showarrow = T,
+     ax = '2005-01-15',                  # date, arrow tail  
+     ay = 145                            # level, arrow tail
+     ) %>%                        
+  # text annotation for arrow
+  add_annotations(  
+     x = '2012-01-15',                   # date, arrow tipp
+     y = 200,                            # level, arrow tipp
+     xref = 'x', yref = 'y',  
+     text = '15 year trend, +3.5%pa',    # text contents arrow
+     showarrow = F,
+     textangle = -33) %>% 
+  layout(autosize = T, width = 840)
+```
+
+When comparing the price development of only two categories we find that 'Transport' is converging on a trend set by 'Tabaco & Alcohol' which has increased by 3.5% yearly for the past 15 years.  
+
+The highest prices for 'Leisure, Entertainment and Culture' are consistently in July where are 15% above the minimum in January.
+
+The prices of 'Clothing & Shoes' follows the seasons with peaks in October and April due to consumers buying new summer and winter clothes in these months.
+
+
+## Cyclical Price Development of Categories of Consumer Spending
+
+Other categories of consumer spending experience cyclical volatility, among those are 'Clothing & Shoes' and 'Leisure, Entertainment and Culture' spending.
+```{r, warning = FALSE}
+plot_ly(df_1_std, type = 'scatter', mode = 'lines') %>%
+  add_trace(x = ~date, y = ~CC13_03_Bekleidung_und_Schuhe, name = 'Clothing & Shoes') %>%
+  add_trace(x = ~date, y = ~CC13_09_Freizeit_Unterhaltung_und_Kultur, name = 'Leisure, Entertainment and Culture') %>%
+  layout(
+    showlegend = FALSE,
+    title = 'Cycles of Clothing & Shoes and Leisure, Entertainment and Culture Spending',
+    margin = 0.05,
+    plot_bgcolor = '#e5ecf6',
+    xaxis = list(title = 'Year'),
+    yaxis = list(title = 'Inflation Index')) %>%
+  layout(
+    xaxis = list(
+      range = c('2016-01-15', '2020-01-15'),
+    yaxis = list(
+      range = c(110, 145)
+    ))) %>%
+  layout(
+    shapes = list(list(type = 'rect', fillcolor = 'green',
+                       line = list(color = 'green'),
+                       opacity = 0.2, y0 = 132, y1 = 140, x0 = '2016-07-15', x1 = '2017-07-15'),
+                  list(type = 'rect', fillcolor = 'orange',
+                       line = list(color = 'orange'),
+                       opacity = 0.2, y0 = 105, y1 = 126, x0 = '2018-10-15', x1 = '2019-04-15'))) %>%
+  add_text(showlegend = FALSE, x = c('2017-01-15', '2019-01-15'), y = c(139, 106),
+           text = c('12 month cycle', '6 month cycle')) %>% 
+  layout(autosize = T, width = 840) %>%
+  add_annotations( 
+                       x = c('2017-01-15', '2019-01-15'),               # date, arrow tipp
+                       y = c(141, 104),                                 # level, arrow tipp
+                       xref = 'x', yref = 'y',
+                       text = c('Leisure, Entertainment and Culture', 'Clothing & Shoes'),    # text contents arrow
+                       showarrow = F,
+                       color = 'orange')  %>% 
+  # adding arrow
+  add_annotations( 
+     x = '2017-07-15',                   # date, arrow tipp
+     y = 135,                            # level, arrow tipp
+     xref = 'x', yref = 'y',
+     axref = 'x', ayref = 'y',
+     text = '',
+     showarrow = T,
+     ax = '2017-01-15',                  # date, arrow tail  
+     ay = 118                            # level, arrow tail
+     ) %>%                        
+  # text annotation for arrow
+  add_annotations(  
+     x = '2017-04-15',                   # date, arrow text
+     y = 129,                            # level, arrow text
+     xref = 'x', yref = 'y',  
+     text = '15%  increase',             # text contents arrow
+     showarrow = F,
+     textangle = -53) %>% 
+  # adding arrow
+  add_annotations( 
+     x = '2019-04-15',                   # date, arrow tipp
+     y = 125,                            # level, arrow tipp
+     xref = 'x', yref = 'y',
+     axref = 'x', ayref = 'y',
+     text = '',
+     showarrow = T,
+     ax = '2019-01-15',                  # date, arrow tail  
+     ay = 117                            # level, arrow tail
+             ) %>%                      
+  # text annotation for arrow
+  add_annotations(  
+     x = '2019-03-15',                   # date, arrow text
+     y = 120,                            # level, arrow text
+     xref = 'x', yref = 'y',  
+     text = '6% increase',               # text contents arrow
+     showarrow = F,
+     textangle = -55)
+
+```
+# Conclusion
+
+The ECB announced: "We are targeting an inflation rate of 2% over the medium term. Our commitment to this target is symmetric: we view inflation that is too low just as negatively as inflation that is too high." 
+
+There is good chance that it will be quite some time before levels of 3% or 4% can be achieved again. It is yet to show itself if the rise of inflation will continue further in the near future.   
+
+This affects families with lower incomes most with a price increase of some food items and even public transport. The 68% of german commuters who use a car will continue to feel the effects of the sudden increase in fuel prices. Even those that can work from home will notice the impact of higher energy prices when heating or those wanting to travel abroad as part of their kids school holidays.
+
+For anyone looking for ways to safe money during times of rising inflation, the idea of buying items anti-cyclical might be appealing. Like buying expensive wintercoats at the end of season sales or maybe booking summer holiday accommodations in the beginning of the year. 
