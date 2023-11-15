@@ -1,47 +1,49 @@
-# Data Science Coursework Projects
+# Predictive Credit Compliance Analysis
 
-This repository contains two key projects from a Data Science coursework, each employing machine learning techniques for different analytical objectives.
+## Project Overview
+This project aims to analyze and predict credit compliance among bank customers using machine learning techniques. The task involves exploring whether certain features significantly influence credit compliance and employing different classification models to predict customer behavior.
 
-## Project 1: Machine Learning Analysis
+## Customer and Task Description
+- **Customer:** A bank providing anonymized data of 1000 customers.
+- **Objective:** To create a statistical model that predicts which customers will fully pay back their credit and which will default on their credit obligations.
 
-This project involves implementing and analyzing various machine learning algorithms. It includes several exercises each focusing on different aspects of machine learning, from k-Nearest Neighbors to Random Forest algorithms.
+## Methodology
+The project is structured into several phases, including data preparation, exploratory data analysis, and machine learning model training and testing.
 
-### Key Features
-- In-depth analysis of k-Nearest Neighbors and Random Forest algorithms.
-- Exploration of the “Online Shoppers Purchasing Intention” dataset.
-- Machine learning setup for feature selection and data splitting.
-- Training and testing with different parametrizations of the Random Forest classifier.
-- Evaluation and stability analysis, along with feature importance investigation.
+### Preparation
+- Libraries: `numpy`, `pandas`, `plotly_express`, `sklearn`
+- Machine Learning Models: K-Nearest Neighbors (KNN), Decision Tree, Support Vector Classifier (SVC)
 
-### Technologies Used
-Python, Pandas, Plotly Express, Scikit-Learn.
+### Data Ingestion
+- Data Source: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/machine-learning-databases/00522/SouthGermanCredit.zip)
+- Data consists of 21 features with a mix of categorical and numerical attributes.
 
-## Project 2: Predictive Credit Compliance Analysis
+### Exploratory Data Analysis
+- Correlation analysis of variables.
+- Visualization of distributions and relationships between various features and credit compliance.
 
-The second project aims to predict credit compliance among bank customers. It uses machine learning techniques to determine whether specific features significantly influence credit compliance.
+### Machine Learning
+- Baseline establishment for model performance comparison.
+- Data preparation for machine learning including feature scaling and data splitting.
+- Nested cross-validation for hyperparameter tuning and model evaluation.
+- Performance comparison of KNN, Decision Tree, and SVC models using accuracy and balanced accuracy metrics.
 
-### Key Features
-- Analyzing anonymized data of 1000 bank customers.
-- Predicting customers' likelihood to fully pay back their credit or default.
-- Machine learning models used: K-Nearest Neighbors (KNN), Decision Tree, Support Vector Classifier (SVC).
-- Includes data ingestion, exploratory data analysis, and machine learning phases.
-- Analysis of model performance using accuracy and balanced accuracy metrics.
+## Results and Conclusion
+- Best performing model: Polynomial kernel-based Support Vector Machine (SVM).
+- The model provides predictions with higher accuracy compared to the established baseline.
+- Confusion matrix analysis to understand model predictions.
+- Suggestions for further improvements including incorporation of additional features and exploration of more complex models like neural networks.
 
-### Technologies Used
-Python, Pandas, Plotly Express, Scikit-Learn.
+## Usage
+1. Ensure required Python libraries are installed.
+2. Download and extract the dataset from the provided link.
+3. Run the Jupyter Notebooks or Python scripts to replicate the analysis.
 
-## General Information
+## License
+This project is open-source and available under standard open-source licenses.
 
-### Installation and Usage
-- Ensure Python and necessary libraries are installed.
-- Clone the repository to your local machine.
-- Run the Jupyter Notebooks or Python scripts to view the analysis and results in each project.
+## Contact
+For any queries or suggestions related to this project, please reach out to [Your Contact Information].
 
-### Contributing
-Contributions to these projects are welcome. Please fork the repository and submit a pull request for any enhancements.
-
-### License
-Both projects are open-source, available under standard open-source licenses.
-
-### Acknowledgements
-Special thanks to the data providers, including the UCI Machine Learning Repository, and the supportive community resources that guided the understanding of complex machine learning algorithms.
+## Acknowledgements
+Special thanks to the UCI Machine Learning Repository for providing the dataset and to the community for resources that supported the understanding of machine learning algorithms.
