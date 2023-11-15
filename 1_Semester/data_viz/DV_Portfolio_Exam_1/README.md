@@ -1,61 +1,55 @@
 # Visualization Challenge
 
-## Overview
-This project, created by Regis Funke, is a comprehensive analysis of the Happy Planet Index (HPI) using data visualization techniques. The project is structured as a series of tasks, each focusing on different aspects of the data. The primary goal is to explore and visualize the relationships between various factors like GDP per capita, life expectancy, experienced wellbeing, ecological footprint, and their impact on the Happy Planet Index.
+## Project Overview
+
+This project, authored by Regis Funke, focuses on creating insightful and aesthetically pleasing visualizations of the Happy Planet Index (HPI) data. The HPI, an alternative to GDP, measures well-being and sustainability. This repository contains R scripts and data for visualizing various aspects of the HPI, using data from [Happy Planet Index](https://happyplanetindex.org).
+
+### Key Objectives:
+1. Reveal relationships between multiple variables in the HPI dataset.
+2. Analyze the evolution of Zimbabwe's HPI over time.
+3. Visualize HPI data on a world map with a specific projection.
+4. Show the distribution of HPI per continent.
+
+## Installation
+
+Before running the scripts, ensure you have R installed along with the following packages:
+- `tidyverse`
+- `sf`
+- `rnaturalearth`
+- `GGally`
+- `plotly`
+- `viridis`
 
 ## Data Source
-The data for this project is sourced from the [Happy Planet Index website](https://happyplanetindex.org), which provides an alternative to mainstream indicators of ecological growth. The Happy Planet Index is computed from three variables: life expectancy, experienced wellbeing, and ecological footprint.
 
-## Tools and Libraries Used
-- R Language
-- Tidyverse
-- sf (Simple Features for R)
-- rnaturalearth
-- GGally
-- Plotly
-- Viridis
+The data is sourced from the Happy Planet Index website and includes variables like life expectancy, experienced wellbeing, ecological footprint, and GDP per capita.
 
-## Tasks and Analysis
+## Structure
 
-### Task 1: Visualizing Relationships (2019 Data)
-- Focus: Relationships between `gdp_capita`, `experienced_wellbeing`, `footprint`, `life_expectancy`, and `hpi`.
-- Method: Correlation matrix and scatter plots with annotations.
-- Insights: Examines the correlation between different variables and the Happy Planet Index, highlighting the lack of correlation between GDP per capita and HPI, among other findings.
+- `happy-planet-index.csv`: The main dataset used for the analyses.
+- `R Scripts`: Contains all the R scripts to generate visualizations.
+  - `Setup.R`: Script for setting up the environment and loading necessary packages.
+  - `Task1.R`: Script for visualizing relationships between variables for the year 2019.
+  - `Task2.R`: Script for analyzing Zimbabwe's HPI evolution.
+  - `Task3.R`: Script for mapping HPI data on a world map.
+  - `Task4.R`: Script for visualizing HPI distribution per continent.
 
-### Task 2: Zimbabwe's HPI Evolution (2006-2020)
-- Focus: Time series analysis of Zimbabwe's HPI and related factors.
-- Method: Line plots showing percentage changes over time.
-- Insights: Observes two distinct periods in Zimbabwe's HPI history, analyzing the impact of life expectancy, experienced wellbeing, and ecological footprint on the HPI.
+## Usage
 
-### Task 3: Global HPI Visualization (2019)
-- Focus: Worldwide visualization of HPI.
-- Method: Lambert azimuthal equal-area projection map.
-- Insights: Presents a global view of the Happy Planet Index, with a focus on the country with the highest HPI in 2019.
+Each script in the `R Scripts` folder corresponds to a specific task. Run these scripts in R to generate the visualizations. The scripts contain detailed comments explaining each step of the analysis.
 
-### Task 4: HPI Distribution by Continent
-- Focus: Comparative analysis of HPI across continents.
-- Method: Violin plots.
-- Insights: Compares the mean and distribution of HPI across different continents, revealing interesting patterns and outliers.
+## Contributing
 
-## Conclusion
-This project provides a deep dive into the Happy Planet Index, offering valuable insights into how various factors correlate with happiness and sustainability across different countries and continents. It stands as a testament to the power of data visualization in understanding complex datasets.
-
-## Repository Structure
-- R Markdown files containing the analysis code and comments.
-- CSV files with the Happy Planet Index data.
-- Additional resources and references.
-
-## How to Use
-1. Clone the repository.
-2. Open the R Markdown files in an R environment.
-3. Install the required libraries.
-4. Run the code to reproduce the analysis and visualizations.
-
-## Author
-Regis Funke
+Contributions to enhance the project are welcome. Please fork the repository and submit a pull request for review.
 
 ## License
-This project is open source and available under the [MIT License](LICENSE).
 
-## Acknowledgments
-Thanks to the Happy Planet Index for providing the data used in this project.
+This project is open-source and available under the MIT License.
+
+## Contact
+
+For any queries or suggestions, please reach out to Regis Funke at [regisfunke@example.com](mailto:regisfunke@example.com).
+
+## Acknowledgements
+
+Special thanks to the Happy Planet Index community for providing an insightful dataset that enables a deeper understanding of global well-being beyond economic metrics.
