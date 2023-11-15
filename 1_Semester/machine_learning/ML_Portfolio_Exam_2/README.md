@@ -1,56 +1,52 @@
-# Credit Compliance Prediction Project
+# Predictive Credit Compliance Analysis
 
-## Overview
-This project aims to develop a statistical model to predict whether bank customers will fully repay their credit or default on their credit obligations. The analysis is based on anonymized data from 1000 bank customers. The project involves exploratory data analysis and the application of various machine learning techniques for classification.
+## Project Overview
+This project aims to analyze and predict credit compliance among bank customers using machine learning techniques. The task involves exploring whether certain features significantly influence credit compliance and employing different classification models to predict customer behavior.
 
-## Data
-The dataset comprises anonymized information of 1000 customers from a bank. It includes 21 features, with 17 categorical and 3 numerical attributes. The target variable is the credit compliance status of the customers.
-
-### Features
-- **Account Status, Contract Duration, Credit History, Purpose, Credit Amount, Savings, Employment Duration, Installment Rate, Other Installment Plans, Age, etc.**
-- The categorical attributes are already encoded into ordinal values.
-- The dataset includes both descriptive statistics and a detailed explanation of each feature.
+## Customer and Task Description
+- **Customer:** A bank providing anonymized data of 1000 customers.
+- **Objective:** To create a statistical model that predicts which customers will fully pay back their credit and which will default on their credit obligations.
 
 ## Methodology
+The project is structured into several phases, including data preparation, exploratory data analysis, and machine learning model training and testing.
+
+### Preparation
+- Libraries: `numpy`, `pandas`, `plotly_express`, `sklearn`
+- Machine Learning Models: K-Nearest Neighbors (KNN), Decision Tree, Support Vector Classifier (SVC)
+
+### Data Ingestion
+- Data Source: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/machine-learning-databases/00522/SouthGermanCredit.zip)
+- Data consists of 21 features with a mix of categorical and numerical attributes.
 
 ### Exploratory Data Analysis
-- The data is first inspected and prepared for visualization.
-- Correlation analysis is conducted to understand the relationships between different features.
-- Various plots (box plots, bar charts, histograms) are used to visualize the distribution and relationship of features with the target variable.
+- Correlation analysis of variables.
+- Visualization of distributions and relationships between various features and credit compliance.
 
 ### Machine Learning
-Three classes of classifiers are used:
-1. **K-Nearest Neighbors (KNN)**
-2. **Decision Tree**
-3. **Support Vector Classifier (SVC)**
+- Baseline establishment for model performance comparison.
+- Data preparation for machine learning including feature scaling and data splitting.
+- Nested cross-validation for hyperparameter tuning and model evaluation.
+- Performance comparison of KNN, Decision Tree, and SVC models using accuracy and balanced accuracy metrics.
 
-#### Data Preparation
-- The data is shuffled and split into features and target labels.
-- StandardScaler is used for feature scaling.
-
-#### Nested Cross-Validation
-- Nested cross-validation is implemented for model selection and evaluation.
-- GridSearchCV is used for hyperparameter tuning.
-- Performance metrics such as accuracy, balanced accuracy, and confusion matrix values are calculated.
-
-#### Results
-- The performance of each model is evaluated based on accuracy and balanced accuracy.
-- The best performing model is identified based on these metrics.
-- A confusion matrix is constructed to understand the model's performance in terms of false positives and negatives.
-
-## Conclusion
-- The best performing model is the Support Vector Machine with a polynomial kernel.
-- The model's accuracy and balanced accuracy are compared against a baseline to assess its effectiveness.
-- The confusion matrix provides insights into the model's predictive capabilities in a real-world scenario.
+## Results and Conclusion
+- Best performing model: Polynomial kernel-based Support Vector Machine (SVM).
+- The model provides predictions with higher accuracy compared to the established baseline.
+- Confusion matrix analysis to understand model predictions.
+- Suggestions for further improvements including incorporation of additional features and exploration of more complex models like neural networks.
 
 ## Usage
-To run the analysis:
-1. Clone the repository.
-2. Ensure all dependencies are installed.
-3. Run the Jupyter Notebook to see the analysis and results.
+1. Ensure required Python libraries are installed.
+2. Download and extract the dataset from the provided link.
+3. Run the Jupyter Notebooks or Python scripts to replicate the analysis.
 
-## Dependencies
-- Python libraries: Pandas, NumPy, Scikit-learn, Plotly Express, Matplotlib.
+## Contributing
+Contributions to this project are welcome. Please fork the repository and submit a pull request for any enhancements or fixes.
 
 ## License
-This project is licensed under the [MIT License](LICENSE.md).
+This project is open-source and available under standard open-source licenses.
+
+## Contact
+For any queries or suggestions related to this project, please reach out to [Your Contact Information].
+
+## Acknowledgements
+Special thanks to the UCI Machine Learning Repository for providing the dataset and to the community for resources that supported the understanding of machine learning algorithms.
