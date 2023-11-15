@@ -1,40 +1,46 @@
-# Data Science Coursework: Projects Overview
+# Second Semester Data Science Coursework Projects
 
-This directory contains two comprehensive data science projects focusing on different aspects of text analysis and political communication analysis. Both projects are part of a data science coursework, demonstrating the application of various data science techniques and Python libraries.
+This directory contains a diverse array of projects completed in the second semester of a data science program. Each project explores different methodologies in data science, from OCR performance analysis to deep learning models.
 
-## Project 1: Text Analysis and Word Embedments
+## Directory Structure and Content
 
-### Overview
-A multifaceted project delving into text data analysis, web scraping, word cloud generation, training word embeddings, and building a content-based recommender system. 
+### OCR Engines Performance Comparison (`application_project`)
+- **Folder Name**: `application_project`
+- **Overview**: Comparison of various OCR engines to determine the best performer under different image conditions.
+- **Key Engines**: Pytesseract, EasyOCR, docTR.
+- **Technologies**: Python, Pandas, Matplotlib, Pillow, Pytesseract, EasyOCR, python-doctr, python-Levenshtein, Plotly, OpenCV.
 
-### Key Aspects
-- **Web Scraping**: Automated extraction of articles from a news website.
-- **Word Cloud Generation**: Creating visual representations of text data.
-- **Training Word Embeddings**: Utilizing Word2Vec and FastText for model training.
-- **Content-based Recommender System**: Recommending articles based on word embeddings.
+### Frequent Itemset Mining and Association Rule Learning (`data_mining`)
+- **Folder Name**: `data_mining`
+- **Overview**: Utilizes APRIORI and FP-Growth algorithms for frequent itemset mining and association rule learning.
+- **Key Features**: Algorithm implementation, support value analysis, performance measurement, visualization.
+- **Technologies**: Python, Pandas, Numpy, MLxtend, Plotly Express, Timeit.
 
-## Project 2: Analysis of German Parliament Press Releases
+### Neural Network-Based Credit Default Prediction (`deep_learning`)
+- **Folder Name**: `deep_learning`
+- **Overview**: Focuses on predicting credit defaults using a neural network model.
+- **Key Features**: Data preprocessing, neural network model development in PyTorch, performance evaluation.
+- **Technologies**: Python, Pandas, NumPy, Matplotlib, Plotly Express, PyTorch, ray.tune.
 
-### Overview
-An analytical project aimed at examining the communications of the German parliament, extracting and analyzing prevalent topics over a specific timeframe.
+### Social Media Analytics (`social_media_analytics`)
+- **Folder Name**: `social_media_analytics`
+- **Overview**: Projects focusing on the analysis of social media data, including text analysis, sentiment analysis, and user behavior modeling.
+- **Key Features**: Data scraping, text mining, sentiment analysis, user interaction modeling.
+- **Technologies**: Python, NumPy, Pandas, BeautifulSoup, Gensim, NLTK, Matplotlib, Plotly Express.
 
-### Key Aspects
-- **Data Scraping**: Collecting press releases for text analysis.
-- **Data Filtering**: Using LDA for filtering out specific types of press releases.
-- **Topic Analysis**: Employing LDA for topic modeling and analysis.
-- **Data Visualization**: Visualizing topic trends and distributions over time.
+## Installation and Usage
+- To replicate the analysis for any project:
+  1. Ensure Python and the required libraries are installed.
+  2. Clone the repository and navigate to the respective project directory (`application_project`, `data_mining`, `deep_learning`, or `social_media_analytics`).
+  3. Run the Python scripts or Jupyter notebooks as per the project requirements.
 
-## Technologies Used Across Projects
-- Python, NumPy, Pandas, BeautifulSoup, Gensim, NLTK, Matplotlib, Plotly Express, pyLDAvis, Requests, Spacy, WordCloud.
+## License
+All projects in this directory are open-source, available under standard open-source licenses, and intended for educational purposes as part of a data science coursework.
 
-## Usage
-To replicate these analyses:
-1. Install Python along with the required libraries.
-2. Clone the respective repositories for each project.
-3. Execute the provided Python scripts or Jupyter notebooks as per project requirements.
+## Contributing
+Contributions, suggestions, and improvements to these projects are welcome. Please fork the repository and submit a pull request for review.
 
-## Licensing
-Both projects are open-source, intended for educational and research purposes under standard open-source licenses.
+## Acknowledgements
+Special thanks to instructors, peers, and data providers who contributed to the resources and datasets used in these projects.
 
-### Note
-These projects demonstrate diverse applications in data science, ranging from natural language processing to political data analysis. For in-depth insights, especially in political communication analysis, consultation with a domain expert is recommended.
+For more detailed information and analyses, please refer to the README files and content within each project's subdirectory.
