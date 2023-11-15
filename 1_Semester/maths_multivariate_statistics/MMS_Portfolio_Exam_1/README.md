@@ -1,40 +1,67 @@
-# Data Sciences Coursework Project: K-Means Clustering Analysis
+# Data Science Coursework: Clustering Analysis
 
 ## Overview
+This project is part of a Data Science coursework focusing on clustering analysis using k-Means algorithm. It involves conducting a series of exercises to analyze datasets with different characteristics, determine the optimal number of clusters (k), and explore the relationship between different features in the datasets.
 
-This project is part of a data sciences coursework, focusing on the application of K-Means clustering to various datasets. The project is structured into several exercises, each addressing different aspects of clustering and data analysis.
+## Project Structure
+The project is structured into multiple exercises, each tackling a specific aspect of clustering analysis:
 
-## Content and Methods
+### Part I: Portfolio Exam
+#### Exercise 1: Initial Analysis
+- Ingest and analyze raw Dataset 𝐴.
+- Determine the number of instances, features, feature range, and standard deviation.
 
-### Exercise 1: Initial Data Analysis
-- **Dataset A Analysis**: Initial exploration of Dataset A, including the number of instances and features, feature range, and standard deviation.
-- **Scatter Plot Visualization**: A scatter plot of Dataset A to visualize the data distribution.
+#### Exercise 1.5: Data Visualization
+- Visualize data using a scatter plot.
 
-### Exercise 2: K-Means Clustering on Dataset A
-- **Silhouette Coefficient Analysis**: Computation of K-Means clusterings for `k` values ranging from 2 to 10, and analysis using silhouette coefficients.
-- **Optimal Cluster Identification**: Identification of the optimal number of clusters based on silhouette coefficients.
-- **Cluster Visualization**: Visualization of the clustering results using scatter plots and color coding for different clusters.
+#### Exercise 2: k-Means Clustering
+- Perform k-Means clustering on Dataset 𝐴 for k = 2, 3, ..., 10.
+- Compute silhouette coefficients and plot against k.
+- Choose optimal k and visualize clustering with scatter plot.
 
-### Exercise 3: K-Means Clustering on Dataset B
-- **Inertia Analysis**: Computation of K-Means clusterings for different `k` values and analysis of inertia.
-- **Elbow Method Application**: Use of the Elbow Method to determine the optimal number of clusters.
-- **Silhouette Plot Comparison**: Comparison of the best `k` value using silhouette plots.
-- **Cluster Distribution Analysis**: Analysis of feature distribution within each cluster.
+#### Exercise 2.4: Data Standardization
+- Address issues with the dataset by standardizing the data.
+- Reconduct clustering analysis post-standardization.
 
-### Exercise 4: Line Representations and Clustering on Dataset C
-- **K-Means Clustering**: Application of K-Means clustering to Dataset C.
-- **Line Representations**: Mathematical representation and visualization of lines in relation to the clustered data.
-- **Cluster and Line Relationship Analysis**: Discussion on the relationship between the lines and the clustered dataset.
+#### Exercise 3: Inertia Calculation
+- Compute k-means clustering on raw Dataset 𝐵 for k = 2, 3, ..., 10.
+- Calculate inertia and plot against k using the elbow method.
 
-## Tools and Libraries Used
+#### Exercise 3.4: Optimal k Determination
+- Determine the best k using KneeLocator.
+- Compare results with silhouette plot.
+
+#### Exercise 3.6: Cluster Visualization
+- Visualize clustering of Dataset 𝐵 using scatter plot and colors.
+
+#### Exercise 3.8: Feature Distribution Analysis
+- Analyze the distribution of each feature in each cluster.
+
+### Part II: Line Representations
+#### Exercise 4.1 to 4.4
+- Perform k-Means clustering for Dataset 𝐶 with k = 2.
+- Integrate mathematical line representations into cluster visualization.
+- Discuss the relation of lines to clustered datasets.
+
+## Technologies Used
 - Python
 - Pandas
-- NumPy
 - Matplotlib
 - Plotly Express
 - Scikit-learn
 - Kneed
 - Yellowbrick
 
+## Installation and Usage
+1. Ensure Python is installed with the necessary libraries (Pandas, Matplotlib, Plotly Express, Scikit-learn, Kneed, Yellowbrick).
+2. Clone the repository to your local machine.
+3. Execute the Jupyter Notebook or Python scripts to replicate the analysis.
+
+## Contributing
+Contributions to this project are welcome. Please fork the repository and submit a pull request for any enhancements.
+
 ## License
-This project is open-source and available under the [MIT License](LICENSE).
+This project is open-source and available under standard open-source licenses.
+
+## Acknowledgements
+Special thanks to the instructors and the course materials that provided the foundational knowledge for this analysis.
