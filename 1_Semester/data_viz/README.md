@@ -1,46 +1,59 @@
-# Data Visualization and Analysis Projects
+# Data Sciences Coursework Projects
 
-This repository hosts two distinct data visualization and analysis projects, each focusing on a unique aspect of data interpretation and presentation. Below is a brief overview of each project.
+This repository contains two major projects from a Data Sciences coursework, each focusing on distinct areas of data visualization and analysis. Below are brief overviews of each project.
 
-## 1. Visualization Challenge
+## Project 1: Visualization Challenge
 
-### Overview
-Created by Regis Funke, this project provides an in-depth analysis of the Happy Planet Index (HPI) using advanced data visualization techniques. It explores the relationships between various factors like GDP per capita, life expectancy, and ecological footprint, and their impact on the HPI.
-
-### Key Highlights
-- Correlation analysis between different variables and the HPI.
-- Time series analysis of Zimbabwe's HPI from 2006 to 2020.
-- Global visualization of HPI and comparative analysis across continents.
-
-[More about the Visualization Challenge](./Visualization-Challenge/README.md)
-
-## 2. Data Visualization Project: Analyzing Inflation Trends
+**Author:** Regis Funke
 
 ### Overview
-This project, part of a data sciences coursework, analyzes and visualizes inflation trends based on data from DESTATIS (German Federal Office of Statistics). It includes a Python notebook for data preparation and an R Markdown document for data visualization and analysis.
+This project aims to create insightful visualizations of the Happy Planet Index (HPI), an alternative to GDP that measures well-being and sustainability. The project includes analysis and visualization of HPI data in various aspects.
 
-### Key Highlights
-- Data preparation involving fetching, cleaning, and transforming DESTATIS data.
-- Historical analysis of inflation trends since 1991.
-- Detailed analysis of price development in various consumer spending categories.
+### Key Features
+- Relationship analysis between multiple HPI variables.
+- Evolution study of Zimbabwe's HPI over time.
+- World map visualization of HPI data using specific projection.
+- HPI distribution analysis per continent.
 
-[More about Analyzing Inflation Trends](./Data-Visualization-Project-Analyzing-Inflation-Trends/README.md)
+### Technology
+R language with libraries like `tidyverse`, `plotly`, `sf`, and others.
+
+### Data Source
+Data is sourced from the [Happy Planet Index website](https://happyplanetindex.org).
+
+## Project 2: RF DV Portfolio Exam 2
+
+**Conducted:** Summer Semester 2022
+
+### Overview
+This project focuses on analyzing inflation and its impact on consumer spending categories using data from DESTATIS, the German Federal Office of Statistics. It covers historical inflation trends and their effects on various spending areas since 1991.
+
+### Key Features
+- Analysis of the consumer price index since 1992.
+- Detailed month-by-month inflation rate study.
+- Exploration of continuous and cyclical price developments in consumer spending categories.
+- Comparative analysis across specific spending categories like transportation and education.
+
+### Technology
+R language and `tidyverse`, `plotly` for data processing and visualization.
+
+### Data Source
+Data obtained from [DESTATIS](https://www-genesis.destatis.de/genesis/online).
 
 ## General Information
 
-Both projects utilize a combination of Python and R for data manipulation, analysis, and visualization, showcasing the power of these tools in uncovering insights from complex datasets.
+### Installation and Usage
+For each project, ensure R is installed with necessary packages as listed in their respective sections. Follow the instructions in each project's directory to run the analysis and view visualizations.
 
-## Usage
+### Contributing
+Contributions to enhance either of the projects are welcome. Please fork the repository and submit a pull request for review.
 
-To explore each project:
-1. Clone this repository.
-2. Navigate to the project directory of interest.
-3. Follow the instructions in the respective README file for setup and execution details.
+### License
+Both projects are open-source, available under standard open-source licenses.
 
-## Contributing
+### Contact and Acknowledgements
+Each project contains specific contact details and acknowledgements to respective data sources and contributors.
 
-Contributions to these projects are welcome. Please refer to the individual project directories for more details on contributing.
+---
 
-## License
-
-Both projects are licensed under the [MIT License](LICENSE.md).
+For detailed information on each project, refer to their individual README files in their respective directories.
