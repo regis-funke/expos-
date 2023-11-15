@@ -1,46 +1,44 @@
-# Data Science and Machine Learning Projects
+# Data Science Coursework Projects
 
-This repository contains two major projects in the field of data science and machine learning. Each project focuses on a different application of machine learning techniques to solve real-world problems. Below is an overview of each project.
+This repository contains two key projects from a Data Science coursework, each employing machine learning techniques for different analytical objectives.
 
-## Projects Overview
+## Project 1: Machine Learning Analysis
 
-### 1. Data Science Project: Analysis of Online Shoppers' Purchasing Intention
+This project involves implementing and analyzing various machine learning algorithms. It includes several exercises each focusing on different aspects of machine learning, from k-Nearest Neighbors to Random Forest algorithms.
 
-This project aims to predict online shoppers' purchasing intentions using various machine learning algorithms. It involves a detailed analysis of the "Online Shoppers Purchasing Intention" dataset and applies techniques like k-Nearest Neighbors and Random Forest for predictive modeling.
+### Key Features
+- In-depth analysis of k-Nearest Neighbors and Random Forest algorithms.
+- Exploration of the “Online Shoppers Purchasing Intention” dataset.
+- Machine learning setup for feature selection and data splitting.
+- Training and testing with different parametrizations of the Random Forest classifier.
+- Evaluation and stability analysis, along with feature importance investigation.
 
-#### Key Features:
-- Application of k-Nearest Neighbors and Random Forest algorithms.
-- Comprehensive data analysis and feature importance study.
-- Evaluation of model performance and stability.
+### Technologies Used
+Python, Pandas, Plotly Express, Scikit-Learn.
 
-[More about this project](./Data-Science-Project-Analysis-of-Online-Shoppers-Purchasing-Intention/README.md)
+## Project 2: Predictive Credit Compliance Analysis
 
-### 2. Credit Compliance Prediction Project
+The second project aims to predict credit compliance among bank customers. It uses machine learning techniques to determine whether specific features significantly influence credit compliance.
 
-This project focuses on developing a statistical model to predict bank customers' credit compliance. It uses a dataset of 1000 anonymized bank customers and applies machine learning classifiers like KNN, Decision Tree, and Support Vector Classifier for prediction.
+### Key Features
+- Analyzing anonymized data of 1000 bank customers.
+- Predicting customers' likelihood to fully pay back their credit or default.
+- Machine learning models used: K-Nearest Neighbors (KNN), Decision Tree, Support Vector Classifier (SVC).
+- Includes data ingestion, exploratory data analysis, and machine learning phases.
+- Analysis of model performance using accuracy and balanced accuracy metrics.
 
-#### Key Features:
-- Exploratory data analysis to understand feature relationships.
-- Implementation of various machine learning classifiers.
-- Nested cross-validation for model selection and performance evaluation.
-
-[More about this project](./Credit-Compliance-Prediction-Project/README.md)
+### Technologies Used
+Python, Pandas, Plotly Express, Scikit-Learn.
 
 ## General Information
 
-Both projects are examples of applying data science and machine learning techniques to solve problems with real-world data. They showcase the use of Python and its libraries like Pandas, NumPy, Scikit-learn, and Plotly Express for data manipulation, analysis, and model development.
+### Installation and Usage
+- Ensure Python and necessary libraries are installed.
+- Clone the repository to your local machine.
+- Run the Jupyter Notebooks or Python scripts to view the analysis and results in each project.
 
-## Usage
+### License
+Both projects are open-source, available under standard open-source licenses.
 
-To explore each project:
-1. Clone this repository.
-2. Navigate to the project directory of interest.
-3. Follow the instructions in the respective README file for setup and execution details.
-
-## Contributing
-
-Contributions to these projects are welcome. Please refer to the individual project directories for more details on contributing.
-
-## License
-
-Both projects are licensed under the [MIT License](LICENSE.md).
+### Acknowledgements
+Special thanks to the data providers, including the UCI Machine Learning Repository, and the supportive community resources that guided the understanding of complex machine learning algorithms.
